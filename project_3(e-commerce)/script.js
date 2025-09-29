@@ -79,9 +79,11 @@
    }
 
    // remove from cart
-   function removeFromCart(index) {
+   function removeFromCart(index)  {
+      
      cart.splice(index, 1); // remove item
      renderCart(); // refresh cart
+    
    }
 
    // checkout

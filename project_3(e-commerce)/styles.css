@@ -81,3 +81,14 @@ h2 {
 .hidden {
   display: none;
 }
+ 
+ .remove-btn {
+background-color: #032f32;
+color: #fff;
+padding: 2px;
+margin-bottom: 2px;
+}
+.remove-btn:hover{
+background-color: #fff;
+color: #01181f;
+}
