@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const restartBtn = document.getElementById("restart-btn");
   const questionContainer = document.getElementById("question-container");
   const questiontext = document.getElementById("question-text");
-  const resultContainer = document.getElementById("result-container");
   const choicesList = document.getElementById("choices-list");
+  const resultContainer = document.getElementById("result-container");
   const scoreDisplay = document.getElementById("score");
 
   const questions = [
@@ -52,6 +52,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   startBtn.addEventListener("click", startQuiz);
 
+  nextBtn.addEventListener("click", () => {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questions.length) {
+      showQuestion();
+    } else {
+      showResult();
+    }
+  });
+
+  restartBtn.addEventListener("click", () => {
+    currentQuestionIndex = 0;
+    score = 0;
+    resultContainer.classList.add("hidden");
+    startQuiz();
+  });
+
   function startQuiz() {
     startBtn.classList.add("hidden");
     resultContainer.classList.add("hidden");
@@ -62,17 +78,26 @@ document.addEventListener("DOMContentLoaded", () => {
   function showQuestion() {
     nextBtn.classList.add("hidden");
     questiontext.textContent = questions[currentQuestionIndex].question;
-    choicesList.innerHTML = ""//clear preevious choices
-    questions[currentQuestionIndex].choices.forEach(choice => {
-      const li = document.createElement('li')
-      li.textContent = choice
-      li.addEventListener('click',selectAnswer(choice))
-    })
+    choicesList.innerHTML = ""; //clear preevious choices
+    questions[currentQuestionIndex].choices.forEach((choice) => {
+      const li = document.createElement("li");
+      li.textContent = choice;
+      li.addEventListener("click", () => selectAnswer(choice));
+      choicesList.appendChild(li);
+    });
   }
-  
-  
+
   function selectAnswer(choice) {
-  
-  
+    const correctAnswer = questions[currentQuestionIndex].answer;
+    if (choice === correctAnswer) {
+      score++;
+    }
+    nextBtn.classList.remove("hidden");
+  }
+
+  function showResult() {
+    questionContainer.classList.add("hidden");
+    resultContainer.classList.remove("hidden");
+    scoreDisplay.textContent = `${score} out of ${questions.length}`;
   }
 });
